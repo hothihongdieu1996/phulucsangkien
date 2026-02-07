@@ -7,8 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    
     <style>
-        /* --- CÀI ĐẶT CHUNG (GIỐNG TRANG TRƯỚC) --- */
+        /* --- CÀI ĐẶT CHUNG --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Montserrat', sans-serif;
@@ -36,27 +38,18 @@
             text-decoration: none; color: #1565c0; font-weight: 700;
             display: flex; align-items: center; gap: 8px; transition: 0.3s;
         }
-        .back-btn:hover { padding-right: 5px; } /* Hiệu ứng đẩy nhẹ */
+        .back-btn:hover { padding-right: 5px; }
         .page-title { font-weight: 800; color: #333; font-size: 1.2rem; }
-        .badge-8 { background: #1565c0; color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-left: 10px;}
+        
+        /* ĐỔI MÀU CAM CHO LỚP 9 ĐỂ KHÁC LỚP 8 */
+        .badge-9 { background: #f57f17; color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-left: 10px;}
 
-        /* --- NÚT UPLOAD (QUAN TRỌNG) --- */
-        .upload-btn {
-            background: #1565c0; color: white; border: none;
-            padding: 10px 20px; border-radius: 30px;
-            font-weight: 600; cursor: pointer;
-            display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 4px 15px rgba(21, 101, 192, 0.3);
-            transition: all 0.3s ease;
-        }
-        .upload-btn:hover { background: #0d47a1; transform: translateY(-2px); }
-
-        /* --- CONTAINER CHÍNH --- */
+        /* --- CONTAINER --- */
         .gallery-container {
             max-width: 1200px; margin: 30px auto; padding: 0 20px;
         }
 
-        /* --- BỘ LỌC (TABS) --- */
+        /* --- BỘ LỌC --- */
         .filters {
             display: flex; gap: 15px; margin-bottom: 30px; justify-content: center; flex-wrap: wrap;
         }
@@ -69,18 +62,18 @@
             border: 1px solid transparent;
         }
         .filter-tag.active, .filter-tag:hover {
-            background: #fff; color: #1565c0;
-            border-color: #1565c0; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: #fff; color: #f57f17; /* Màu cam */
+            border-color: #f57f17; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* --- LƯỚI ẢNH (GRID) --- */
+        /* --- GRID --- */
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Tự động chia cột */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
 
-        /* --- THẺ ẢNH (CARD) --- */
+        /* --- CARD ẢNH --- */
         .photo-card {
             background: white;
             border-radius: 15px;
@@ -89,39 +82,32 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             cursor: pointer;
+            display: flex; flex-direction: column;
         }
         .photo-card:hover { transform: translateY(-5px); }
 
+        /* Style cho thẻ A bao quanh */
+        .photo-link {
+            display: block; width: 100%; height: 100%; position: relative;
+        }
+
         .photo-img {
-            width: 100%; height: 400px; object-fit: cover;
-            display: block;
-        }
-        
-        /* Hiệu ứng lớp phủ khi di chuột */
-        .card-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-            opacity: 0; transition: 0.3s;
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
-        }
-        .photo-card:hover .card-overlay { opacity: 1; }
-
-        .card-title { color: white; font-weight: 700; font-size: 1rem; margin-bottom: 5px; }
-        .card-date { color: #ddd; font-size: 0.8rem; }
-        .card-icon { 
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: white; font-size: 2rem; opacity: 0.8;
+            width: 100%; height: 350px; object-fit: cover; display: block;
+            transition: 0.3s;
         }
 
-        /* Nút xóa ảnh (Giả lập chức năng quản lý) */
-        .delete-btn {
-            position: absolute; top: 10px; right: 10px;
-            background: rgba(255,0,0,0.7); color: white;
-            width: 30px; height: 30px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; transition: 0.3s;
+        /* Hiệu ứng kính lúp khi di chuột */
+        .hover-icon {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: white; font-size: 3rem; opacity: 0;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            pointer-events: none;
         }
-        .photo-card:hover .delete-btn { opacity: 1; }
+
+        .photo-card:hover .hover-icon { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .photo-card:hover .photo-img { filter: brightness(0.8); }
 
     </style>
 </head>
@@ -132,97 +118,76 @@
     <nav class="navbar">
         <div class="nav-left">
             <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Trang chủ</a>
-            <div class="page-title">Thư Viện Ảnh <span class="badge-8">LỚP 9</span></div>
+            <div class="page-title">Thư Viện Ảnh <span class="badge-9">LỚP 9</span></div>
         </div>
-    <!-- 
-        <button class="upload-btn" onclick="alert('Tính năng này cần Backend (PHP/NodeJS) để lưu ảnh vào server!')">
-            <i class="fas fa-cloud-upload-alt"></i> Thêm ảnh mới
-        </button>
-    -->
     </nav>
 
     <div class="gallery-container">
         
         <div class="filters">
             <div class="filter-tag active">Tất cả</div>
-        <!--    <div class="filter-tag">Hoạt động ngoại khóa</div>
-            <div class="filter-tag">Thi đua học tập</div>
-            <div class="filter-tag">Văn nghệ</div> -->
         </div>
 
         <div class="photo-grid">
 
             <div class="photo-card">
-                <img src="https://drive.google.com/thumbnail?id=176e9MA0HeiZ4YtC8Nlc0XWipww1Ngb4q&sz=w1920" class="photo-img" alt="Giờ học">
-            <!--    <div class="delete-btn"><i class="fas fa-trash"></i></div>
-                <div class="card-overlay">
-                    <div class="card-icon"><i class="fas fa-search-plus"></i></div>
-                    <div class="card-title">Thảo luận nhóm 8/1</div>
-                    <div class="card-date">12/05/2024</div>
-                </div> -->
+                <a href="https://drive.google.com/thumbnail?id=176e9MA0HeiZ4YtC8Nlc0XWipww1Ngb4q&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Giờ học lớp 9">
+                    <img src="https://drive.google.com/thumbnail?id=176e9MA0HeiZ4YtC8Nlc0XWipww1Ngb4q&sz=w1920" class="photo-img" alt="Giờ học">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
             </div>
 
             <div class="photo-card">
-                <img src="https://drive.google.com/thumbnail?id=1GzkgGliVN8yj-JnUeRs5CyMacykQqZ5P&sz=w1920" class="photo-img" alt="Giờ học">  
-            <!--    <div class="delete-btn"><i class="fas fa-trash"></i></div>
-                <div class="card-overlay">
-                    <div class="card-icon"><i class="fas fa-search-plus"></i></div>
-                    <div class="card-title">Giờ học Địa lý thú vị</div>
-                    <div class="card-date">10/05/2024</div>
-                </div> -->
+                <a href="https://drive.google.com/thumbnail?id=1GzkgGliVN8yj-JnUeRs5CyMacykQqZ5P&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Hoạt động ngoại khóa">
+                    <img src="https://drive.google.com/thumbnail?id=1GzkgGliVN8yj-JnUeRs5CyMacykQqZ5P&sz=w1920" class="photo-img" alt="Giờ học">  
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
             </div>
 
             <div class="photo-card">
-                <img src="https://drive.google.com/thumbnail?id=ID_HINH_ANH_3&sz=w1920" class="photo-img" alt="Văn nghệ"> 
-            <!--    <div class="delete-btn"><i class="fas fa-trash"></i></div>
-                <div class="card-overlay">
-                    <div class="card-icon"><i class="fas fa-search-plus"></i></div>
-                    <div class="card-title">Hội diễn văn nghệ 26/3</div>
-                    <div class="card-date">26/03/2024</div>
-                </div> -->
+                <a href="https://drive.google.com/thumbnail?id=Thay_ID_Hinh_Anh_3_Vao_Day&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Văn nghệ 26/3">
+                    <img src="https://drive.google.com/thumbnail?id=Thay_ID_Hinh_Anh_3_Vao_Day&sz=w1920" class="photo-img" alt="Văn nghệ"> 
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
             </div>
 
             <div class="photo-card">
-                <img src="https://drive.google.com/thumbnail?id=ID_HINH_ANH_4&sz=w1920" class="photo-img" alt="Văn nghệ">
-            <!--    <div class="delete-btn"><i class="fas fa-trash"></i></div>
-                <div class="card-overlay">
-                    <div class="card-icon"><i class="fas fa-search-plus"></i></div>
-                    <div class="card-title">Hội diễn văn nghệ 26/3</div>
-                    <div class="card-date">26/03/2024</div>
-                </div> -->
+                <a href="https://drive.google.com/thumbnail?id=Thay_ID_Hinh_Anh_4_Vao_Day&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Biểu diễn văn nghệ">
+                    <img src="https://drive.google.com/thumbnail?id=Thay_ID_Hinh_Anh_4_Vao_Day&sz=w1920" class="photo-img" alt="Văn nghệ">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
             </div>
 
             <div class="photo-card">
-                <img src="https://drive.google.com/thumbnail?id=ID_HINH_ANH_5&sz=w1920" class="photo-img" alt="Văn nghệ"> 
-            <!--    <div class="delete-btn"><i class="fas fa-trash"></i></div>
-                <div class="card-overlay">
-                    <div class="card-icon"><i class="fas fa-search-plus"></i></div>
-                    <div class="card-title">Hội diễn văn nghệ 26/3</div>
-                    <div class="card-date">26/03/2024</div>
-                </div> -->
+                <a href="https://drive.google.com/thumbnail?id=Thay_ID_Hinh_Anh_5_Vao_Day&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Hoạt động tập thể">
+                    <img src="https://drive.google.com/thumbnail?id=Thay_ID_Hinh_Anh_5_Vao_Day&sz=w1920" class="photo-img" alt="Văn nghệ"> 
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
             </div>
 
             <div class="photo-card">
-                <img src="https://drive.google.com/thumbnail?id=ID_HINH_ANH_6&sz=w1920" class="photo-img" alt="Văn nghệ">
-            <!--    <div class="delete-btn"><i class="fas fa-trash"></i></div>
-                <div class="card-overlay">
-                    <div class="card-icon"><i class="fas fa-search-plus"></i></div>
-                    <div class="card-title">Hội diễn văn nghệ 26/3</div>
-                    <div class="card-date">26/03/2024</div>
-                </div> -->
+                <a href="https://drive.google.com/thumbnail?id=Thay_ID_Hinh_Anh_6_Vao_Day&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Ảnh kỷ niệm">
+                    <img src="https://drive.google.com/thumbnail?id=Thay_ID_Hinh_Anh_6_Vao_Day&sz=w1920" class="photo-img" alt="Văn nghệ">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
             </div>
-        <!--
-             <div class="photo-card" style="border: 2px dashed #1565c0; background: rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; height: 200px;">
-                <div style="text-align: center; color: #1565c0;">
-                    <i class="fas fa-plus-circle" style="font-size: 2rem; margin-bottom: 10px;"></i>
-                    <div>Vị trí ảnh mới</div>
-                </div>
-            </div>
-        -->
+
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script>
+        Fancybox.bind("[data-fancybox]", {
+            animationEffect: "zoom",
+            Wheel: "slide",
+        });
+    </script>
+
 </body>
-
-
 </html>
