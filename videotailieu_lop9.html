@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Tư Liệu Lớp 8</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- CÀI ĐẶT CƠ BẢN --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            min-height: 100vh;
+        }
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.2); z-index: -1;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+        .back-btn {
+            text-decoration: none; color: #1565c0; font-weight: 700;
+            display: flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        .back-btn:hover { padding-right: 5px; }
+        .page-title { font-weight: 800; color: #333; font-size: 1.2rem; }
+        .badge-8 { background: #1565c0; color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-left: 10px;}
+
+        .add-video-btn {
+            background: #e53935; color: white; border: none;
+            padding: 10px 25px; border-radius: 30px;
+            font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 4px 15px rgba(229, 57, 53, 0.3);
+            transition: all 0.3s ease;
+        }
+        .add-video-btn:hover { background: #c62828; transform: translateY(-2px); }
+
+        /* --- CONTAINER DANH SÁCH --- */
+        .list-container {
+            max-width: 900px; /* Container vừa phải để video không bị quá loãng */
+            margin: 40px auto; padding: 0 20px;
+        }
+
+        /* --- THẺ VIDEO DẠNG RẠP CHIẾU (CINEMA CARD) --- */
+        .video-row {
+            display: block; /* Thay đổi quan trọng: Xếp chồng thay vì xếp ngang */
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 40px; /* Tăng khoảng cách giữa các video */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Bóng đổ sâu hơn */
+            transition: transform 0.3s ease;
+        }
+        
+        .video-row:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Phần Video: Chiếm trọn chiều rộng */
+        .video-left {
+            width: 100%;
+            background: #000;
+            position: relative;
+            /* Kỹ thuật giữ tỉ lệ 16:9 để video luôn to và đẹp */
+            padding-bottom: 56.25%; 
+            height: 0;
+        }
+        .video-left iframe {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; border: none;
+        }
+
+        /* Phần Thông tin: Chỉ chứa tiêu đề */
+        .video-right {
+            width: 100%;
+            padding: 20px 25px;
+            text-align: left; /* Hoặc center nếu bạn thích tiêu đề giữa */
+        }
+
+        .video-title {
+            font-size: 1.5rem; /* Tiêu đề to hơn */
+            font-weight: 700; color: #1565c0;
+            margin: 0; /* Bỏ margin thừa */
+            line-height: 1.3;
+        }
+
+        /* --- ẨN CÁC PHẦN KHÔNG CẦN THIẾT --- */
+        .video-desc, .video-footer {
+            display: none !important;
+        }
+
+
+        /* Card thêm mới */
+        .add-placeholder {
+            border: 3px dashed #1565c0; background: rgba(255,255,255,0.7);
+            border-radius: 15px; padding: 40px; text-align: center;
+            color: #1565c0; cursor: pointer; transition: 0.3s;
+            font-size: 1.2rem; font-weight: 600;
+        }
+        .add-placeholder:hover { background: rgba(255,255,255,0.95); }
+
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Trang chủ</a>
+            <div class="page-title">Video Tư Liệu <span class="badge-8">LỚP 8</span></div>
+        </div>
+    </nav>
+
+    <div class="list-container" id="videoList">
+
+        <div class="video-row">
+            <div class="video-left">
+                <iframe 
+                    src="https://drive.google.com/file/d/1H3Uk4PomLgwCM0wZA03ZnH3RyKx_26Di/preview" 
+                    allow="autoplay; fullscreen" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="video-right">
+                <div class="video-title">Tình huống 1: ...</div>
+                <div class="video-desc">Mô tả đã ẩn...</div>
+                <div class="video-footer">Footer đã ẩn...</div>
+            </div>
+        </div>
+
+        <div class="video-row">
+            <div class="video-left">
+                 <iframe 
+                    src="https://drive.google.com/file/d/14anxh9oWJt37K5-2jb9_AM-AxXSGdzXd/preview" 
+                    allow="autoplay; fullscreen" 
+                    allowfullscreen>
+                </iframe> 
+            </div>
+            <div class="video-right">
+                <div class="video-title">Tình huống 2: ...</div>
+                 <div class="video-desc">Mô tả đã ẩn...</div>
+                 <div class="video-footer">Footer đã ẩn...</div>
+            </div>
+        </div>
+
+        <div class="video-row">
+            <div class="video-left">
+                 <iframe 
+                    src="https://drive.google.com/file/d/1CyTWHs_9J-jw6t_KFP0R7bUVQLkOeZyF/preview" 
+                    allow="autoplay; fullscreen" 
+                    allowfullscreen>
+                </iframe> 
+            </div>
+            <div class="video-right">
+                <div class="video-title">Tình huống 3: ...</div>
+                 <div class="video-desc">Mô tả đã ẩn...</div>
+                 <div class="video-footer">Footer đã ẩn...</div>
+            </div>
+        </div>
+
+        <div class="video-row">
+            <div class="video-left">
+                 <iframe 
+                    src="https://drive.google.com/file/d/1CfniLSGx-NbU_KUuYWgKHRbUTnwolFQF/preview" 
+                    allow="autoplay; fullscreen" 
+                    allowfullscreen>
+                </iframe> 
+            </div>
+            <div class="video-right">
+                <div class="video-title">Tình huống 4: ...</div>
+                 <div class="video-desc">Mô tả đã ẩn...</div>
+                 <div class="video-footer">Footer đã ẩn...</div>
+            </div>
+        </div>
+
+        <div class="video-row">
+            <div class="video-left">
+                 <iframe 
+                    src="https://drive.google.com/file/d/1wgYhh9i8VNaI5KTIe6yf79Qys-WvJFMx/preview" 
+                    allow="autoplay; fullscreen" 
+                    allowfullscreen>
+                </iframe> 
+            </div>
+            <div class="video-right">
+                <div class="video-title">Tình huống 5: ...</div>
+                 <div class="video-desc">Mô tả đã ẩn...</div>
+                 <div class="video-footer">Footer đã ẩn...</div>
+            </div>
+        </div>
+
+        <div class="video-row">
+            <div class="video-left">
+                 <iframe 
+                    src="https://drive.google.com/file/d/1bTkJ53DXZlt0lggXMatzWHNoHMZQVXBB/preview" 
+                    allow="autoplay; fullscreen" 
+                    allowfullscreen>
+                </iframe> 
+            </div>
+            <div class="video-right">
+                <div class="video-title">Tình huống 6: ...</div>
+                 <div class="video-desc">Mô tả đã ẩn...</div>
+                 <div class="video-footer">Footer đã ẩn...</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function addNewVideo() {
+            let url = prompt("Dán link YouTube của bạn vào đây:");
+            
+            if (url) {
+                let videoId = extractVideoID(url);
+                
+                if (videoId) {
+                    // Chỉ hỏi tiêu đề, không hỏi mô tả nữa
+                    let title = prompt("Tiêu đề video:", "Bài học mới...");
+                    
+                    let newRowHTML = `
+                        <div class="video-row">
+                            <div class="video-left">
+                                <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
+                            </div>
+                            <div class="video-right">
+                                <div class="video-title">${title}</div>
+                            </div>
+                        </div>
+                    `;
+
+                    let list = document.getElementById('videoList');
+                    let placeholder = list.lastElementChild;
+                    placeholder.insertAdjacentHTML('beforebegin', newRowHTML);
+
+                } else {
+                    alert("Link không hợp lệ! Hãy dùng link YouTube.");
+                }
+            }
+        }
+
+        function extractVideoID(url) {
+            var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            return (match && match[2].length == 11) ? match[2] : null;
+        }
+    </script>
+
+</body>
+</html>

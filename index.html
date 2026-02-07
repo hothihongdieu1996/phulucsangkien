@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phụ Lục Sáng Kiến - Trường THCS Huỳnh Thúc Kháng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* CÀI ĐẶT CƠ BẢN */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            /* Hình nền thiên nhiên mờ ảo */
+            background: url('https://drive.google.com/thumbnail?id=1dRZ9als_g37z18Ycw_Y8RP0N0ehkfKyD&sz=w1920') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* LỚP PHỦ MỜ ĐỂ LÀM NỔI BẬT NỘI DUNG */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: -1;
+        }
+
+        /* CONTAINER CHÍNH */
+        .main-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.85); /* Tăng độ đậm nền một chút cho dễ đọc */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* HEADER & LOGO */
+        .header { margin-bottom: 40px; }
+        
+        .logo-placeholder {
+            width: 120px; height: 120px; /* Tăng kích thước logo lên chút cho rõ */
+            background: #fff;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            overflow: hidden; /* Quan trọng: Để cắt ảnh thành hình tròn */
+        }
+        
+        /* Class mới cho ảnh logo */
+        .logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Đảm bảo logo không bị méo */
+            padding: 5px; /* Khoảng cách nhỏ giữa viền và logo */
+        }
+
+        h1 { color: #0066cc; font-weight: 800; font-size: 1.8rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;} /* Đổi màu xanh cho hợp logo Huỳnh Thúc Kháng */
+        h2 { color: #444; font-weight: 600; font-size: 1.1rem; margin-bottom: 10px; line-height: 1.5; }
+        .badge {
+            background: #2196F3; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: bold;
+            display: inline-block;
+        }
+
+        /* GRID LAYOUT */
+        .grade-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grade-section { grid-template-columns: 1fr; }
+        }
+
+        /* THIẾT KẾ KHỐI LỚP */
+        .grade-block {
+            padding: 20px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+        .grade-block:hover { transform: translateY(-5px); }
+
+        .block-8 { background: rgba(233, 247, 255, 0.7); border: 2px solid #90caf9; }
+        .block-9 { background: rgba(255, 248, 225, 0.7); border: 2px solid #ffe082; }
+
+        .grade-title {
+            font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .block-8 .grade-title { color: #1565c0; }
+        .block-9 .grade-title { color: #f57f17; }
+
+        /* BUTTONS */
+        .action-buttons { display: grid; gap: 15px; }
+        
+        .btn-card {
+            display: flex; align-items: center;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            border-left: 5px solid transparent;
+        }
+
+        .block-8 .btn-card { border-left-color: #1565c0; }
+        .block-9 .btn-card { border-left-color: #f57f17; }
+
+        .btn-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            padding-left: 25px;
+        }
+
+        .btn-icon {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 15px;
+        }
+        .block-8 .btn-icon { background: #e3f2fd; color: #1565c0; }
+        .block-9 .btn-icon { background: #fff8e1; color: #f57f17; }
+
+        .btn-text { text-align: left; }
+        .btn-main-text { font-weight: 700; font-size: 1.1rem; display: block;}
+        .btn-sub-text { font-size: 0.85rem; color: #666; font-weight: 400;}
+
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="main-container">
+        <div class="header">
+            <div class="logo-placeholder">
+                <img src="logo.jpg" alt="Logo THCS Huỳnh Thúc Kháng" class="logo-img">
+            </div>
+            
+            <h1>Trường THCS Huỳnh Thúc Kháng</h1>
+            <h2>Phụ Lục Sáng Kiến Chủ Đề - Thiết kế kịch bản tranh minh họa cho các bài tập tình huống để phát triển năng lực giải quyết vấn đề cho học sinh trong dạy học phần pháp luật môn Giáo dục công dân lớp 8 và lớp 9</h2>
+            <span class="badge">Môn: GDCD</span>
+        </div>
+
+        <div class="grade-section">
+            
+            <div class="grade-block block-8">
+                <div class="grade-title">
+                    <i class="fas fa-book-reader"></i> LỚP 8
+                </div>
+                <div class="action-buttons">
+                    <a href="thuvienhinhanh_lop8.html" class="btn-card">
+                        <div class="btn-icon"><i class="fas fa-images"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-main-text">Thư Viện Ảnh</span>
+                            <span class="btn-sub-text">Xem hoạt động lớp 8</span>
+                        </div>
+                    </a>
+                    <a href="videotailieu_lop8.html" class="btn-card">
+                        <div class="btn-icon"><i class="fas fa-play-circle"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-main-text">Video Tư Liệu</span>
+                            <span class="btn-sub-text">Bài giảng & clip ngắn</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grade-block block-9">
+                <div class="grade-title">
+                    <i class="fas fa-graduation-cap"></i> LỚP 9
+                </div>
+                <div class="action-buttons">
+                    <a href="thuvienhinhanh_lop9.html" class="btn-card">
+                        <div class="btn-icon"><i class="fas fa-images"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-main-text">Thư Viện Ảnh</span>
+                            <span class="btn-sub-text">Xem hoạt động lớp 9</span>
+                        </div>
+                    </a>
+                    <a href="videotailieu_lop9.html" class="btn-card">
+                        <div class="btn-icon"><i class="fas fa-play-circle"></i></div>
+                        <div class="btn-text">
+                            <span class="btn-main-text">Video Tư Liệu</span>
+                            <span class="btn-sub-text">Bài giảng & clip ngắn</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
