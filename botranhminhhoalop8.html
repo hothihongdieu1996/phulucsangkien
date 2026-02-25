@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bộ Tranh Minh Họa Lớp 8 - THCS Huỳnh Thúc Kháng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
+    <style>
+        /* --- GIỮ NGUYÊN CSS CHUNG --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            color: #333; min-height: 100vh;
+        }
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); z-index: -1;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+        .back-btn {
+            text-decoration: none; color: #2e7d32;
+            font-weight: 700; display: flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        .back-btn:hover { padding-right: 5px; color: #1b5e20; }
+        .page-title { font-weight: 800; color: #333; font-size: 1.2rem; }
+        
+        /* Badge màu xanh riêng cho Lớp 8 */
+        .badge-8 { background: #1565c0; color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-left: 10px;}
+
+        /* --- CSS CHO BỘ LỌC (MỚI THÊM) --- */
+        .filter-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 8px 20px; border: none; background: rgba(255,255,255,0.8); 
+            border-radius: 20px; cursor: pointer; transition: 0.3s; 
+            font-weight: 600; font-family: 'Montserrat', sans-serif; color: #555;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #1565c0; color: white; box-shadow: 0 4px 10px rgba(21, 101, 192, 0.4);
+        }
+
+        /* Logic ẩn hiện ảnh */
+        .filter-item { display: none; } /* Mặc định ẩn hết */
+        .show { display: flex; animation: fadeIn 0.5s; } /* Class này để hiện ảnh */
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        /* --- GRID CONTAINER --- */
+        .gallery-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* --- CARD STYLE --- */
+        .photo-card {
+            background: white; border-radius: 12px; overflow: hidden;
+            position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            flex-direction: column; /* display flex đã có ở class .show */
+        }
+        .photo-card:hover { transform: translateY(-5px); }
+        .photo-link { display: block; width: 100%; height: 100%; position: relative; }
+        .photo-img {
+            width: 100%; height: 250px; object-fit: cover; display: block;
+            border-bottom: 3px solid #1565c0; /* Viền xanh dương cho lớp 8 */
+        }
+        .photo-desc { padding: 15px; text-align: center; }
+        .photo-desc h4 { font-size: 1rem; margin-bottom: 5px; color: #1565c0; }
+        .photo-desc p { font-size: 0.85rem; color: #666; }
+
+        /* Icon kính lúp */
+        .hover-icon {
+            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            color: white; font-size: 3rem; opacity: 0; transition: all 0.3s ease;
+            pointer-events: none; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .photo-card:hover .hover-icon { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .photo-card:hover .photo-img { filter: brightness(0.7); transition: 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
+            <div class="page-title">Bộ Tranh Minh Họa <span class="badge-8">LỚP 8</span></div>
+        </div>
+    </nav>
+
+    <div class="gallery-container">
+        
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterSelection('bai7')">Bài 7</button>
+            <button class="filter-btn" onclick="filterSelection('bai9')">Bài 9</button>
+            <button class="filter-btn" onclick="filterSelection('bai10')">Bài 10</button>
+        </div>
+
+        <div class="photo-grid">
+
+            <div class="photo-card filter-item bai7">
+                <a href="https://drive.google.com/thumbnail?id=1cbF31sKTgO8g9JKCEoIRW1_EhJVpHtRQ&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 7: PHÒNG CHỐNG BẠO LỰC GIA ĐÌNH - Tình huống a">
+                    <img src="https://drive.google.com/thumbnail?id=1cbF31sKTgO8g9JKCEoIRW1_EhJVpHtRQ&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 7: PHÒNG CHỐNG BẠO LỰC GIA ĐÌNH</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 47/tình huống a</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai7">
+                <a href="https://drive.google.com/thumbnail?id=1_GdY9wm-MRi53lAdEuQwsT4zCnjip6ZK&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 7: PHÒNG CHỐNG BẠO LỰC GIA ĐÌNH - Tình huống b">
+                    <img src="https://drive.google.com/thumbnail?id=1_GdY9wm-MRi53lAdEuQwsT4zCnjip6ZK&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 7: PHÒNG CHỐNG BẠO LỰC GIA ĐÌNH</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 47/tình huống b</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai7">
+                <a href="https://drive.google.com/thumbnail?id=1npvHLOGc2rRQlBJQ58m-_Uk5ps0xLVhe&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 7: PHÒNG CHỐNG BẠO LỰC GIA ĐÌNH - Tình huống c">
+                    <img src="https://drive.google.com/thumbnail?id=1npvHLOGc2rRQlBJQ58m-_Uk5ps0xLVhe&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 7: PHÒNG CHỐNG BẠO LỰC GIA ĐÌNH</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 47/tình huống c</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai7">
+                <a href="https://drive.google.com/thumbnail?id=1Mk7rFeBlch3VjgGyiFrsqXa0CUhHfNWP&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 7: PHÒNG CHỐNG BẠO LỰC GIA ĐÌNH - Tình huống d">
+                    <img src="https://drive.google.com/thumbnail?id=1Mk7rFeBlch3VjgGyiFrsqXa0CUhHfNWP&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 7: PHÒNG CHỐNG BẠO LỰC GIA ĐÌNH</h4>
+                    <p>Luyện tập: Bài 4 sgk/trang 47/tình huống d</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai9">
+                <a href="https://drive.google.com/thumbnail?id=1bPC7b9FucPMkr_BP1JIqBFepIrW-7oQ8&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 9: PHÒNG NGỪA TAI NẠN VŨ KHÍ, CHÁY, NỔ VÀ CÁC CHẤT ĐỘC HẠI - Tình huống a">
+                    <img src="https://drive.google.com/thumbnail?id=1bPC7b9FucPMkr_BP1JIqBFepIrW-7oQ8&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 9: PHÒNG NGỪA TAI NẠN VŨ KHÍ, CHÁY, NỔ VÀ CÁC CHẤT ĐỘC HẠI</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 58/tình huống a</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai9">
+                <a href="https://drive.google.com/thumbnail?id=1hy1MFTdFfa8f34roD1YLhONypq-F0Ijt&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 9: PHÒNG NGỪA TAI NẠN VŨ KHÍ, CHÁY, NỔ VÀ CÁC CHẤT ĐỘC HẠI - Tình huống b">
+                    <img src="https://drive.google.com/thumbnail?id=1hy1MFTdFfa8f34roD1YLhONypq-F0Ijt&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 9: PHÒNG NGỪA TAI NẠN VŨ KHÍ, CHÁY, NỔ VÀ CÁC CHẤT ĐỘC HẠI</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 58/tình huống b</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai9">
+                <a href="https://drive.google.com/thumbnail?id=1txQANiCDdLe3C0D2hc5Yt_hwWaWi-sKx&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 9: PHÒNG NGỪA TAI NẠN VŨ KHÍ, CHÁY, NỔ VÀ CÁC CHẤT ĐỘC HẠI - Tình huống c">
+                    <img src="https://drive.google.com/thumbnail?id=1txQANiCDdLe3C0D2hc5Yt_hwWaWi-sKx&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 9: PHÒNG NGỪA TAI NẠN VŨ KHÍ, CHÁY, NỔ VÀ CÁC CHẤT ĐỘC HẠI</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 58/tình huống c</p>
+                </div>
+            </div>
+
+             <div class="photo-card filter-item bai10">
+                <a href="https://drive.google.com/thumbnail?id=1snBwGFCz4aLA6MChiemKwIkt0S14mp8A&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 10:  QUYỀN VÀ NGHĨA VỤ LAO ĐỘNG CỦA CÔNG DÂN - Tình huống a">
+                    <img src="https://drive.google.com/thumbnail?id=1snBwGFCz4aLA6MChiemKwIkt0S14mp8A&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 10:  QUYỀN VÀ NGHĨA VỤ LAO ĐỘNG CỦA CÔNG DÂN</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 69/tình huống a</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai10">
+                <a href="https://drive.google.com/thumbnail?id=1t2WN3-ezDMhYgR4D9lRXE0QNkyvYGZRX&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 10:  QUYỀN VÀ NGHĨA VỤ LAO ĐỘNG CỦA CÔNG DÂN - Tình huống b">
+                    <img src="https://drive.google.com/thumbnail?id=1t2WN3-ezDMhYgR4D9lRXE0QNkyvYGZRX&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 10:  QUYỀN VÀ NGHĨA VỤ LAO ĐỘNG CỦA CÔNG DÂN</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 69/tình huống b</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai10">
+                <a href="https://drive.google.com/thumbnail?id=1RggqWqyRA3rgFCRiUTGDi2KVjC5RpuGt&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 10:  QUYỀN VÀ NGHĨA VỤ LAO ĐỘNG CỦA CÔNG DÂN - Tình huống c">
+                    <img src="https://drive.google.com/thumbnail?id=1RggqWqyRA3rgFCRiUTGDi2KVjC5RpuGt&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 10:  QUYỀN VÀ NGHĨA VỤ LAO ĐỘNG CỦA CÔNG DÂN</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 69/tình huống c</p>
+                </div>
+            </div>
+
+
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    
+    <script>
+        // 1. Kích hoạt phóng to ảnh
+        Fancybox.bind("[data-fancybox]", {
+            Images: {
+                zoom: true,
+            },
+            Toolbar: {
+                display: {
+                    left: ["infobar"],
+                    middle: ["zoomIn", "zoomOut", "toggle1to1", "rotateCCW", "rotateCW"],
+                    right: ["slideshow", "thumbs", "close"],
+                },
+            },
+            // Đặt lăn chuột thành zoom thay vì slide
+            Wheel: "zoom", 
+        });
+
+        // 2. Kích hoạt bộ lọc
+        filterSelection("bai7") 
+
+        function filterSelection(c) {
+          var x, i;
+          x = document.getElementsByClassName("filter-item");
+          if (c == "all") c = ""; 
+          for (i = 0; i < x.length; i++) {
+            w3RemoveClass(x[i], "show"); 
+            if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show"); 
+          }
+        }
+
+        function w3AddClass(element, name) {
+          var i, arr1, arr2;
+          arr1 = element.className.split(" ");
+          arr2 = name.split(" ");
+          for (i = 0; i < arr2.length; i++) {
+            if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+          }
+        }
+
+        function w3RemoveClass(element, name) {
+          var i, arr1, arr2;
+          arr1 = element.className.split(" ");
+          arr2 = name.split(" ");
+          for (i = 0; i < arr2.length; i++) {
+            while (arr1.indexOf(arr2[i]) > -1) {
+              arr1.splice(arr1.indexOf(arr2[i]), 1);     
+            }
+          }
+          element.className = arr1.join(" ");
+        }
+
+        // Active button highlight
+        var btnContainer = document.querySelector(".filter-container");
+        var btns = btnContainer.getElementsByClassName("filter-btn");
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].addEventListener("click", function(){
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+          });
+        }
+    </script>
+</body>
+</html>

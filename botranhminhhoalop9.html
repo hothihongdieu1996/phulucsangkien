@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bộ Tranh Minh Họa Lớp 9 - THCS Huỳnh Thúc Kháng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
+    <style>
+        /* --- COPY LẠI CSS CHUNG NHƯ FILE LỚP 8 --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            color: #333; min-height: 100vh;
+        }
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); z-index: -1;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95); padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-left { display: flex; align-items: center; gap: 15px; }
+        .back-btn {
+            text-decoration: none; color: #2e7d32;
+            font-weight: 700; display: flex; align-items: center; gap: 8px; transition: 0.3s;
+        }
+        .back-btn:hover { padding-right: 5px; color: #1b5e20; }
+        .page-title { font-weight: 800; color: #333; font-size: 1.2rem; }
+        
+        /* Badge màu CAM cho Lớp 9 */
+        .badge-9 { background: #f57f17; color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-left: 10px;}
+        
+        /* --- CSS CHO BỘ LỌC (MỚI THÊM CHO LỚP 9) --- */
+        .filter-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 8px 20px; border: none; background: rgba(255,255,255,0.8); 
+            border-radius: 20px; cursor: pointer; transition: 0.3s; 
+            font-weight: 600; font-family: 'Montserrat', sans-serif; color: #555;
+        }
+        /* Active màu CAM */
+        .filter-btn:hover, .filter-btn.active {
+            background: #f57f17; color: white; box-shadow: 0 4px 10px rgba(245, 127, 23, 0.4);
+        }
+
+        .filter-item { display: none; }
+        .show { display: flex; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+
+        .gallery-container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+        .photo-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
+        }
+
+        .photo-card {
+            background: white; border-radius: 12px; overflow: hidden;
+            position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease; flex-direction: column;
+        }
+        .photo-card:hover { transform: translateY(-5px); }
+        .photo-link { display: block; width: 100%; height: 100%; position: relative; }
+        
+        .photo-img {
+            width: 100%; height: 250px; object-fit: cover; display: block;
+            border-bottom: 3px solid #f57f17; /* Viền CAM cho lớp 9 */
+        }
+        
+        .photo-desc { padding: 15px; text-align: center; }
+        .photo-desc h4 { font-size: 1rem; margin-bottom: 5px; color: #f57f17; } /* Chữ cam */
+        .photo-desc p { font-size: 0.85rem; color: #666; }
+
+        .hover-icon {
+            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            color: white; font-size: 3rem; opacity: 0; transition: all 0.3s ease;
+            pointer-events: none; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .photo-card:hover .hover-icon { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .photo-card:hover .photo-img { filter: brightness(0.7); transition: 0.3s; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Quay lại</a>
+            <div class="page-title">Bộ Tranh Minh Họa <span class="badge-9">LỚP 9</span></div>
+        </div>
+    </nav>
+
+    <div class="gallery-container">
+        
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterSelection('bai9')">Bài 9</button>
+            <button class="filter-btn" onclick="filterSelection('bai10')">Bài 10</button>
+        </div>
+
+        <div class="photo-grid">
+
+            <!-- Bài 9 -->
+            <div class="photo-card filter-item bai9">
+                <a href="https://drive.google.com/thumbnail?id=1Rm138LGngC1AkeaP6d-lwdQuShr1u7lq&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ - Tình huống a">
+                    <img src="https://drive.google.com/thumbnail?id=1Rm138LGngC1AkeaP6d-lwdQuShr1u7lq&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ</h4>
+                    <p>Luyện tập: Bài 3/sgk/trang 48/tình huống a</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai9">
+                <a href="https://drive.google.com/thumbnail?id=15jcRUlv7JmWe2vI7tNyEayMSE-YJl6qm&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ - Tình huống b">
+                    <img src="https://drive.google.com/thumbnail?id=15jcRUlv7JmWe2vI7tNyEayMSE-YJl6qm&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ</h4>
+                    <p>Luyện tập: Bài 3/sgk/trang 48/tình huống b</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai9">
+                <a href="https://drive.google.com/thumbnail?id=1u3qYZ9pRaaD1LmMq9U56yTJBDXa3uduR&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ - Tình huống c">
+                    <img src="https://drive.google.com/thumbnail?id=1u3qYZ9pRaaD1LmMq9U56yTJBDXa3uduR&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ</h4>
+                    <p>Luyện tập: Bài 3/sgk/trang 48/tình huống c</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai9">
+                <a href="https://drive.google.com/thumbnail?id=1s6NjM5T8APmCRxoO541w_HLSlZzTS79B&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ - Tình huống d">
+                    <img src="https://drive.google.com/thumbnail?id=1s6NjM5T8APmCRxoO541w_HLSlZzTS79B&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ</h4>
+                    <p>Luyện tập: Bài 3/sgk/trang 48/tình huống d</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai9">
+                <a href="https://drive.google.com/thumbnail?id=1d4cy6lTUvV3ix1IF1-LZx2L_zEbPjvls&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ - Luyện tập B4 -Tình huống a">
+                    <img src="https://drive.google.com/thumbnail?id=1d4cy6lTUvV3ix1IF1-LZx2L_zEbPjvls&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 48/tình huống a</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai9">
+                <a href="https://drive.google.com/thumbnail?id=1gRG7IcMbnx5HNylH4Z3kDkr8IqpaeJ5-&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ - Luyện tập B4 -Tình huống b">
+                    <img src="https://drive.google.com/thumbnail?id=1gRG7IcMbnx5HNylH4Z3kDkr8IqpaeJ5-&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ</h4>
+                    <p>Luyện tập: Bài 4/sgk/trang 48/tình huống b</p>
+                </div>
+            </div>
+
+            <!-- Bài 10 -->
+            <div class="photo-card filter-item bai10">
+                <a href="https://drive.google.com/thumbnail?id=1er63rSAenW4rR5CPGJ2C7ZLliJqxxiNh&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 10: QUYỀN TỰ DO KINH DOANH VÀ NGHĨA VỤ NỘP THUẾ - Tình huống a">
+                    <img src="https://drive.google.com/thumbnail?id=1er63rSAenW4rR5CPGJ2C7ZLliJqxxiNh&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>BÀI 10: QUYỀN TỰ DO KINH DOANH VÀ NGHĨA VỤ NỘP THUẾ</h4>
+                    <p>Luyện tập: Bài 3/sgk/trang 53/tình huống a</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai10">
+                <a href="https://drive.google.com/thumbnail?id=1-TX5vvEYLJidQr8ZdCvN0yKWGBaiYaLO&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 10: QUYỀN TỰ DO KINH DOANH VÀ NGHĨA VỤ NỘP THUẾ - Tình huống b">
+                    <img src="https://drive.google.com/thumbnail?id=1-TX5vvEYLJidQr8ZdCvN0yKWGBaiYaLO&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ</h4>
+                    <p>Luyện tập: Bài 3/sgk/trang 53/tình huống b</p>
+                </div>
+            </div>
+
+            <div class="photo-card filter-item bai10">
+                <a href="https://drive.google.com/thumbnail?id=1xeMrFUPEL4lEU9K_1wrVpHkejRxKykDT&sz=w1920" 
+                   class="photo-link" data-fancybox="gallery" data-caption="BÀI 10: QUYỀN TỰ DO KINH DOANH VÀ NGHĨA VỤ NỘP THUẾ - Tình huống c">
+                    <img src="https://drive.google.com/thumbnail?id=1xeMrFUPEL4lEU9K_1wrVpHkejRxKykDT&sz=w1920" class="photo-img">
+                    <div class="hover-icon"><i class="fas fa-search-plus"></i></div>
+                </a>
+                <div class="photo-desc">
+                    <h4>Bài 9: VI PHẠM PHÁP LUẬT VÀ TRÁCH NHIỆM PHÁP LÍ</h4>
+                    <p>Luyện tập: Bài 3/sgk/trang 53/tình huống c</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script>
+        Fancybox.bind("[data-fancybox]", { animationEffect: "zoom", Wheel: "slide" });
+
+        // Logic bộ lọc (Giống hệt bên Lớp 8)
+        filterSelection("bai9") 
+        function filterSelection(c) {
+          var x, i;
+          x = document.getElementsByClassName("filter-item");
+          if (c == "all") c = ""; 
+          for (i = 0; i < x.length; i++) {
+            w3RemoveClass(x[i], "show"); 
+            if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show"); 
+          }
+        }
+        function w3AddClass(element, name) {
+          var i, arr1, arr2;
+          arr1 = element.className.split(" ");
+          arr2 = name.split(" ");
+          for (i = 0; i < arr2.length; i++) {
+            if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+          }
+        }
+        function w3RemoveClass(element, name) {
+          var i, arr1, arr2;
+          arr1 = element.className.split(" ");
+          arr2 = name.split(" ");
+          for (i = 0; i < arr2.length; i++) {
+            while (arr1.indexOf(arr2[i]) > -1) {
+              arr1.splice(arr1.indexOf(arr2[i]), 1);     
+            }
+          }
+          element.className = arr1.join(" ");
+        }
+        var btnContainer = document.querySelector(".filter-container");
+        var btns = btnContainer.getElementsByClassName("filter-btn");
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].addEventListener("click", function(){
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+          });
+        }
+    </script>
+</body>
+</html>
